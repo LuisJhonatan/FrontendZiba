@@ -2,26 +2,67 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* Colores principales */
+    --primary-color: #c33d56;
+    --secondary-color: #b17b7b;
+    --background-color: #ffffff;
+
+    --bg-footer-color: #333333;
+    /*Colores del header*/
+    --bg-header-color: #fee3ea;
+    --text-header-color: #b17b7b;
+
+    /* Colores para ofertas y estados */
+    --sale-color: #ef4545;
+    --error-color: #ef4545;
+
+    /* Tipografía */
+    --font-family: "inter", sans-serif;
+    --font-size-small: 14px;
+    --font-size-base: 16px;
+    --font-size-large: 20px;
+
+    /* Espaciado */
+    --spacing-small: 8px;
+    --spacing-medium: 16px;
+    --spacing-large: 24px;
+
+    /* Bordes */
+    --border-radius: 4px;
+
+    /* Sombras para elementos */
+    --shadow-small: 0 1px 2px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-large: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+    /* Opacidades para hover y estados deshabilitados */
+    --opacity-disabled: 0.5;
+    --opacity-hover: 0.8;
+
+    /* Transiciones para suavizar animaciones */
+    --transition-speed-fast: 150ms;
+    --transition-speed-medium: 300ms;
+    --transition-speed-slow: 500ms;
+
+    /* Altura de línea para mejorar la legibilidad del texto */
+    --line-height-normal: 1.5;
+    --line-height-large: 1.75;
+
+    /* Z-index para gestionar capas (modales, tooltips, etc.) */
+    --z-index-dropdown: 1000;
+    --z-index-modal: 1050;
+    --z-index-tooltip: 1100;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
+/* #ef4545   
+#c33d56   para bordes
+#b17b7b  
+#fee3ea  
+#d3d3d3
+#fee3ea   
+#333333   
+#000000   
+#ffffff    */
