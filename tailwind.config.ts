@@ -21,11 +21,6 @@ const config: Config = {
       fontFamily: {
         base: ["var(--font-family)", "sans-serif"],
       },
-      fontSize: {
-        small: "var(--font-size-small)",
-        base: "var(--font-size-base)",
-        large: "var(--font-size-large)",
-      },
       borderRadius: {
         default: "var(--border-radius)",
       },
