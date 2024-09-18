@@ -8,8 +8,8 @@
     --primary-color: #c33d56;
     --secondary-color: #b17b7b;
     --background-color: #ffffff;
-
     --bg-footer-color: #333333;
+
     /*Colores del header*/
     --bg-header-color: #fee3ea;
     --text-header-color: #b17b7b;
@@ -20,9 +20,6 @@
 
     /* Tipografía */
     --font-family: "inter", sans-serif;
-    --font-size-small: 14px;
-    --font-size-base: 16px;
-    --font-size-large: 20px;
 
     /* Espaciado */
     --spacing-small: 8px;
@@ -66,3 +63,26 @@
 #333333   
 #000000   
 #ffffff    */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+body {
+  /*background: #000;*/
+  height: 5000px;
+}

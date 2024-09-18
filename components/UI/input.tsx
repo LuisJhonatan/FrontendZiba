@@ -1,42 +1,52 @@
-import { cva, VariantProps } from 'class-variance-authority';
-import React from 'react';
-import { cn } from '@/lib/utils';
+import React from "react";
+import { UseFormRegisterReturn } from "react-hook-form";
+import { cva, VariantProps } from "class-variance-authority";
+import { cn } from "@/lib/utils";
+import { Label } from "./label";
 
-const inputBaseStyles = cva(
-  'border rounded px-1 py-1 w-full', {
-  variants: {
-    variant: {
-      default: 'border-primary focus:ring-2 focus:ring-primary',
-      error: 'border-error focus:ring-error',
-      success: 'border-success focus:ring-success',
+const inputStyles = cva(
+  "w-full border text-xs sm:text-sm border-gray-300 rounded-[4px] px-[6px] py-1 transition-colors duration-300 hover:border-black focus:border-black focus:outline-none",
+  {
+    variants: {
+      variant: {
+        primary: "border-gray-400 ",
+        error: "border-red-500 focus:ring-red-500 focus:border-red-500",
+      },
     },
-    size: {
-      sm: 'text-small py-small',
-      md: 'text-base ',
-      lg: 'text-large ',
-    }
-  },
-  defaultVariants: {
-    variant: 'default',
-    size: 'md',
-  },
-});
-
-// Definir el tipo de props para los componentes de input
-type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> & VariantProps<typeof inputBaseStyles>;
-
-export const TextInput: React.FC<InputProps> = ({ className, variant, size, ...props }) => (
-  <input
-    type="text"
-    className={cn(inputBaseStyles({ variant, size }), className)}
-    {...props}
-  />
+    defaultVariants: {
+      variant: "primary",
+    },
+  }
 );
 
-export const PasswordInput: React.FC<InputProps> = ({ className, variant, size, ...props }) => (
-  <input
-    type="password"
-    className={cn(inputBaseStyles({ variant, size }), className)}
-    {...props}
-  />
-);
+interface InputProps
+  extends React.InputHTMLAttributes<HTMLInputElement>,
+    VariantProps<typeof inputStyles> {
+  label?: string;
+  errorMessage?: string;
+  register: UseFormRegisterReturn;
+}
+
+const Input: React.FC<InputProps> = ({
+  label,
+  errorMessage,
+  register,
+  variant,
+  ...props
+}) => {
+  return (
+    <div className="mb-4">
+      {label && <Label>{label}</Label>}
+      <input
+        {...register}
+        {...props}
+        className={cn(inputStyles({ variant }), props.className)}
+      />
+      {errorMessage && (
+        <p className="mt-1 text-sm text-red-600">{errorMessage}</p>
+      )}
+    </div>
+  );
+};
+
+export default Input;
