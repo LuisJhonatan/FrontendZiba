@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
@@ -12,7 +13,7 @@ import { Button } from "./UI/button";
 
 interface CardProps {
   imageSrc: string;
-  hoverImageSrc: string;
+  hoverImageSrc?: string;
   name: string;
   price: number;
   stock: number;
@@ -31,7 +32,8 @@ export const Card = ({
 }: CardProps) => {
   const [currentImage, setCurrentImage] = useState(imageSrc);
 
-  const handleMouseEnter = () => setCurrentImage(hoverImageSrc);
+  const handleMouseEnter = () => setCurrentImage(hoverImageSrc || imageSrc);
+
   const handleMouseLeave = () => setCurrentImage(imageSrc);
 
   const renderStars = () => {
@@ -47,14 +49,14 @@ export const Card = ({
             <FontAwesomeIcon
               key={index}
               icon={faStarSolid}
-              className="text-yellow-500 h-3 w-3 sm:w-4 sm:h-4"
+              className="text-yellow-500 h-4 w-4"
             />
           ))}
         {partialStar > 0 && (
           <span className="relative">
             <FontAwesomeIcon
               icon={faStarRegular}
-              className="text-gray-300 h-3 w-3 sm:w-4 sm:h-4"
+              className="text-gray-300 h-4 w-4"
             />
             <span
               className="absolute top-0 left-0 overflow-hidden"
@@ -62,7 +64,7 @@ export const Card = ({
             >
               <FontAwesomeIcon
                 icon={faStarSolid}
-                className="text-yellow-500 h-3 w-3 sm:w-4 sm:h-4"
+                className="text-yellow-500 h-4 w-4"
               />
             </span>
           </span>
@@ -81,9 +83,9 @@ export const Card = ({
   };
 
   return (
-    <CardUI className={className} hoverable>
+    <CardUI className={`w-full ${className}`} hoverable>
       <div
-        className="relative"
+        className="relative w-full"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
@@ -92,41 +94,40 @@ export const Card = ({
           alt={name}
           width={600}
           height={600}
-          className="w-full  object-cover rounded-xl"
+          className="w-full h-full object-cover rounded-xl"
           priority
         />
 
         <FontAwesomeIcon
           icon={faHeart}
-          className="absolute top-[4px] right-[4px] sm:top-[10px] sm:right-[10px] text-gray-700 cursor-pointer w-4 h-4 sm:w-8 sm:h-8 bg-white p-2 rounded-full hover:bg-primary hover:text-white"
+          className="absolute top-[4px] right-[4px] sm:top-[10px] sm:right-[10px] text-gray-700 cursor-pointer w-8 h-8 bg-white p-2 rounded-full hover:bg-primary hover:text-white"
         />
       </div>
-      <div className="pt-2 sm:p-4">
-        <h3 className="text-[12px] sm:text-[20px] font-semibold mb-2 pl-2 max-h-10 sm:max-h-16 line-clamp-2">
-          {name}
-        </h3>
-        <p className="text-[14px] sm:text-[16px] text-gray-600 pl-3 sm:pl-4 font-semibold">
-          S/. {price.toFixed(2)}
-        </p>
-        <p className="text-xs sm:text-sm text-gray-500 mt-1 pl-3 sm:pl-4">
-          Stock: {stock}
-        </p>
-        <div className="flex items-center pl-2">
-          {renderStars()}
-          <span className="ml-2 text-xs sm:text-sm text-gray-600 ">
-            {rating}/5
-          </span>
 
-          <FontAwesomeIcon
-            icon={faCartPlus}
-            className="ml-auto w-4 h-4 sm:w-8 sm:h-8 p-2 rounded-full text-footer hover:bg-footer hover:text-white cursor-pointer"
-          />
-        </div>
-        <div className="px-2 sm:px-0">
-          <Button variant="detail" className="text-[12px] sm:text-[16px] sm:mt-2">
-            Ver detalles
-          </Button>
-        </div>
+      <h3 className="text-[20px] font-semibold mb-2 max-h-10 sm:max-h-16 line-clamp-2 bg-slate-100 py-1 px-4 ">
+        {name} asd asd asd asd asd
+      </h3>
+      <p className="text-[16px] text-gray-600 pl-6 font-semibold">
+        S/. {price.toFixed(2)}
+      </p>
+      <p className="text-sm text-gray-500 mt-1 pl-7">
+        Stock: {stock}
+      </p>
+      <div className="flex items-center pl-6">
+        {renderStars()}
+        <span className="ml-2 text-xs sm:text-sm text-gray-600 ">
+          {rating}/5
+        </span>
+
+        <FontAwesomeIcon
+          icon={faCartPlus}
+          className="ml-auto w-8 h-8 p-2 rounded-full text-footer hover:bg-footer hover:text-white cursor-pointer"
+        />
+      </div>
+      <div className="px-2 sm:px-0 mx-6 mb-2">
+        <Button variant="detail" className="text-[12px] sm:text-[16px] sm:mt-2">
+          Ver detalles
+        </Button>
       </div>
     </CardUI>
   );

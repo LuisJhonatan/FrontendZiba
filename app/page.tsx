@@ -1,221 +1,126 @@
-"use client";
-import InputPassword from "@/components/InputPassword";
-import Input from "@/components/UI/input";
-import { RegisterFormData, registerSchema } from "@/lib/validators/auth";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import InputNumeric from "@/components/InputNumeric";
-import { Label } from "@/components/UI/label";
-import * as HoverCard from "@radix-ui/react-hover-card";
-import { useEffect, useState } from "react";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/UI/dialog";
-import { Modal } from "@/components/UI/modal";
-import HoverCardComponent from "@/components/UI/hoverCard";
-import { Card } from "@/components/Card";
-import SelectUI from "@/components/UI/selectUI";
-import { useSelectLogic } from "@/components/Select";
+import SliderHome from "@/components/Slider";
+import { getProducts } from "@/services/products";
+import Image from "next/image";
+import Link from "next/link";
+import { Product } from "@/types/propducts";
+import Carousel from "@/components/CarouselProducts";
+import { IconTablerBrandWhatsapp, IconWhatsapp } from "@/components/icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-}
+export default async function Home() {
+  let bestSellingProducts: Product[] = [];
 
-export default function Home() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  try {
+    bestSellingProducts = await getProducts();
+  } catch (error) {
+    console.error("Error fetching products:", error);
+  }
 
-  const openModal = () => setIsOpen(true);
-  const closeModal = () => setIsOpen(false);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<RegisterFormData>({
-    resolver: zodResolver(registerSchema),
-  });
+  // Asegúrate de que bestSellingProducts sea un array
+  bestSellingProducts = bestSellingProducts || [];
 
-  const onSubmit = (data: RegisterFormData) => {
-    console.log("Login Data:", data);
-  };
-
-  const [products, setProducts] = useState<Product[]>([
-    { id: 1, name: 'Producto A', price: 20 },
-    { id: 2, name: 'Producto B', price: 50 },
-    { id: 3, name: 'Producto C', price: 10 },
-  ]);
-
-  // Hook para controlar el estado del select
-  const selectLogic = useSelectLogic();
-
-  const options = [
-    { label: 'Precio: Bajo a Alto', value: 'price_asc' },
-    { label: 'Precio: Alto a Bajo', value: 'price_desc' },
-    { label: 'Nuevos Productos', value: 'newest' },
-    { label: 'Más Vendidos', value: 'bestselling' },
+  const slides = [
+    {
+      src: "https://via.placeholder.com/1200x400.png?text=Image+1",
+      alt: "Slide 1",
+    },
+    {
+      src: "https://via.placeholder.com/1200x400.png?text=Image+2",
+      alt: "Slide 2",
+    },
+    {
+      src: "https://via.placeholder.com/1200x400.png?text=Image+3",
+      alt: "Slide 3",
+    },
   ];
 
-
-  useEffect(() => {
-    if (selectLogic.selectedOption) {
-      setProducts(prevProducts => {
-        const sortedProducts = [...prevProducts]; // Hace una copia del array original.
-        const { value } = selectLogic.selectedOption;
-        
-        switch (value) {
-          case 'price_asc':
-            sortedProducts.sort((a, b) => a.price - b.price);
-            break;
-          case 'price_desc':
-            sortedProducts.sort((a, b) => b.price - a.price);
-            break;
-          case 'newest':
-            sortedProducts.sort((a, b) => b.id - a.id);
-            break;
-          case 'bestselling':
-            // Lógica para más vendidos (ajustar según tus datos)
-            break;
-        }
-  
-        return sortedProducts; // Solo actualizamos el estado si los productos cambian.
-      });
-    }
-  }, [selectLogic.selectedOption]);// Eliminamos `products` de las dependencias
-  
   return (
-    <div className="w-full flex flex-col justify-center items-center gap-12">
-      {/* <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col w-96 p-3 bg-slate-300 rounded-lg"
-      >
-        <Input
-          label="Correo"
-          type="email"
-          register={register("email")}
-          errorMessage={errors.email?.message}
-        />
-        <InputPassword
-          label="Contraseña"
-          register={register("password")}
-          errorMessage={errors.password?.message}
-        />
-        <button
-          type="submit"
-          className="bg-blue-500 text-white py-2 px-4 rounded w-36 self-center"
-        >
-          Iniciar Sesión
-        </button>
-      </form> */}
+    <div>
+      <main className="min-w-80">
+        <SliderHome slides={slides} />
+        <section className="min-w-80 max-w-[1280px] mx-auto px-3">
+          <div className="w-full mx-auto py-3 sm:px-0 md:py-6">
+            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold inline-block">
+              Nuestros productos
+            </h1>
+          </div>
+          <div className="w-full mx-auto grid grid-cols-2 gap-4 lg:gap-8">
+            <Link
+              href=""
+              className="group relative col-span-2 lg:col-span-1 lg:row-span-2"
+            >
+              <Image
+                src="/images/home/home1.png"
+                alt="home1"
+                width={1000}
+                height={1000}
+                className="h-full object-cover transition-all duration-300 group-hover:brightness-50"
+              />
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 px-6 py-6 md:px-12 md:py-12">
+                <div className="w-full h-full border-4 border-white flex items-center justify-center">
+                  <div className="text-white text-xl md:text-3xl lg:text-5xl font-semibold ">
+                    CARTERAS
+                  </div>
+                </div>
+              </div>
+            </Link>
 
-      <form className="w-96 p-3  rounded-lg" onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          label="Nombre"
-          type="text"
-          register={register("name")}
-          errorMessage={errors.name?.message}
-        />
-        <Input
-          label="Correo"
-          type="email"
-          register={register("email")}
-          errorMessage={errors.email?.message}
-        />
-        <InputPassword
-          label="Contraseña"
-          register={register("password")}
-          errorMessage={errors.password?.message}
-        />
-        <InputNumeric
-          label="edad"
-          register={register("numero")}
-          errorMessage={errors.password?.message}
-        />
+            <Link href="" className="group relative">
+              <Image
+                src="/images/home/home2.png"
+                alt="home2"
+                width={1000}
+                height={1000}
+                className="h-full object-cover transition-all duration-300 group-hover:brightness-50"
+              />
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 px-6 py-6 md:px-12 md:py-12">
+                <div className="w-full h-full border-4 border-white flex items-center justify-center">
+                  <div className="text-white text-xl md:text-3xl lg:text-5xl font-semibold ">
+                    MOCHILAS
+                  </div>
+                </div>
+              </div>
+            </Link>
+            <Link href="" className="group relative">
+              <Image
+                src="/images/home/home3.png"
+                alt="home3"
+                width={1000}
+                height={1000}
+                className="h-full object-cover transition-all duration-300 group-hover:brightness-50"
+              />
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 px-6 py-6 md:px-12 md:py-12">
+                <div className="w-full h-full border-4 border-white flex items-center justify-center">
+                  <div className="text-white text-xl md:text-3xl lg:text-5xl font-semibold ">
+                    BILLETERAS
+                  </div>
+                </div>
+              </div>
+            </Link>
+          </div>
+          <div className="w-full mx-auto py-3 sm:px-0 md:py-6">
+            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold inline-block">
+              Lo mas vendido
+            </h1>
+          </div>
 
-        <button
-          type="submit"
-          className="bg-blue-500 text-white py-2 px-4 rounded"
-        >
-          Registrarse
-        </button>
-      </form>
-      <Label>
-        <section>asdasd</section>
-        <section>asdasd</section>
-        asdasd
-      </Label>
-
-      <input
-        type="text"
-        className="border text-sm border-gray-800 rounded-[4px] px-[6px] py-1 transition-colors duration-300 hover:border-black focus:border-black focus:outline-none"
-      />
-      <div>
-        {/* <Dialog>
-        <DialogTrigger asChild>
-          <button className="px-4 py-2 bg-blue-600 text-white rounded-md">
-            Open Dialog
-          </button>
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Confirm Action</DialogTitle>
-            <DialogDescription>
-              Are you sure you want to perform this action? This action cannot be undone.
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <DialogClose asChild>
-              <button className="px-4 py-2 bg-gray-300 rounded-md">Cancel</button>
-            </DialogClose>
-            <button className="px-4 py-2 bg-red-600 text-white rounded-md">
-              Confirm
-            </button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog> */}
-      </div>
-      <div>
-        <button
-          onClick={openModal}
-          className="p-2 bg-blue-500 text-white rounded"
-        >
-          Abrir Modal
-        </button>
-
-        <Modal isOpen={isOpen} onClose={closeModal} animation="bottom">
-          <h2 className="text-xl font-semibold">
-            Este es el contenido del modal
-          </h2>
-          <p>Es totalmente personalizable y tiene animaciones de entrada.</p>
-        </Modal>
-        <Card
-          imageSrc="https://www.sercoplus.com/26443-large_default/mando-logitech-f310-usb.jpg"
-          hoverImageSrc="https://www.sercoplus.com/26444-large_default/mando-logitech-f310-usb.jpg"
-          name="Nombre cartera asd asda sda ss pepinillo"
-          price={999.99}
-          stock={100}
-          rating={4.3}
-        />
-      </div>
-      <div>
-      <SelectUI {...selectLogic} options={options} />
-      
-      <ul>
-        {products.map((product) => (
-          <li key={product.id}>
-            {product.name} - ${product.price}
-          </li>
-        ))}
-      </ul>
-      </div>
+          <div className="w-full mx-auto py-10 sm:px-0 md:py-6 ">
+            <Carousel products={bestSellingProducts.slice(0, 10)} />{" "}
+            {/* Muestra solo los primeros 10 productos para el carrusel */}
+          </div>
+          <div className="fixed bottom-5 right-5">
+            <a
+              href="https://wa.me/51903315552?text=Hola,%20estoy%20interesado%20en%20adquirir%20uno%20de%20sus%20productos,%20quiero%20mas%20información"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <button className="p-4 rounded-full animate-pulse">
+                <IconWhatsapp className="w-16 h-16"/>
+              </button>
+            </a>
+          </div>
+        </section>
+      </main>
     </div>
   );
 }

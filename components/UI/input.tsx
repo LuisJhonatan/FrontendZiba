@@ -35,7 +35,7 @@ const Input: React.FC<InputProps> = ({
   ...props
 }) => {
   return (
-    <div className="mb-4">
+    <div className="">
       {label && <Label>{label}</Label>}
       <input
         {...register}

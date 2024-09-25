@@ -7,7 +7,7 @@ const buttonBaseStyles = cva(
             variant: {
                 account: 'border border-primary rounded hover:bg-primary hover:text-white',
                 shopping: 'border border-primary rounded',
-                header: 'hover:bg-primary hover:text-white rounded-3xl',
+                header: 'hover:bg-primary hover:text-white rounded-3xl px-5 py-2',
                 detail: 'bg-black text-white rounded-3xl px-4 sm:px-8'
             }
         },
