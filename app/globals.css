@@ -52,6 +52,34 @@
     --z-index-modal: 1050;
     --z-index-tooltip: 1100;
   }
+
+  @keyframes increaseSize {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.9);
+    }
+  }
+
+  @keyframes heartBeat {
+    0%,
+    50%,
+    100% {
+      transform: scale(1);
+    }
+    25% {
+      transform: scale(1.15);
+    }
+    75% {
+      transform: scale(1.3);
+    }
+  }
+
+  .whatsapp {
+    animation: heartBeat 6s infinite ease-in-out 2s;
+  }
 }
 
 /* #ef4545   
@@ -85,4 +113,39 @@
 body {
   /*background: #000;*/
   height: 5000px;
+}
+
+.whatsapp-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  cursor: pointer;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.whatsapp-button:hover {
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
 }

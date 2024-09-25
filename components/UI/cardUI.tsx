@@ -7,11 +7,11 @@ interface CardUIProps extends VariantProps<typeof cardStyles> {
 }
 
 const cardStyles = cva(
-  "rounded-xl shadow-md border border-gray-200 bg-white overflow-hidden pb-2 sm:pb-0 max-w-[137px] sm:max-w-[227px]",
+  "rounded-xl shadow-md border border-gray-200 bg-white overflow-hidden pb-2 sm:pb-0 w-full max-w-[300px]", // Ajuste del tamaño máximo
   {
     variants: {
       hoverable: {
-        true: "hover:shadow-2xl hover:scale-105 transition-transform",
+        true: "hover:scale-[1.05] transition-transform",
       },
     },
     defaultVariants: {
